@@ -1,0 +1,33 @@
+@import "tailwindcss";
+.swiper-button-prev,
+.swiper-button-next {
+  color: white;
+  background: #18181b;
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  border: 1px solid #3f3f46;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  font-weight: bold;
+}
+@keyframes slowZoom {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-slowZoom {
+  animation: slowZoom 18s ease-in-out infinite;
+}
