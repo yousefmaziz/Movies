@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
 
+type Movie = {
+  _id: string;
+  title: string;
+  description: string;
+  posterUrl: string;
+  category: string;
+  rating: number;
+  releaseYear?: number;
+  [key: string]: any;
+};
+
 export default function Home() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [sort, setSort] = useState("");
   const [search, setSearch] = useState("");
 
@@ -16,7 +27,7 @@ export default function Home() {
       if (search) url += `${url.includes("?") ? "&" : "?"}search=${search}`;
 
       const response = await fetch(url);
-      const data = await response.json();
+      const data: Movie[] = await response.json();
       setMovies(data);
     } catch (err) {
       console.error("Error fetching movies:", err);
