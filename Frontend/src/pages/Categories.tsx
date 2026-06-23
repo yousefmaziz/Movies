@@ -20,7 +20,7 @@ const categories = [
 ];
 
 export default function Categories() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState("All");
 
   const getMovies = async () => {
@@ -29,14 +29,16 @@ export default function Categories() {
       if (activeCategory !== "All") url += `?category=${activeCategory}`;
       const response = await fetch(url);
       const data = await response.json();
-      setMovies(data);
+      setMovies(data as any[]);
     } catch (err) {
       console.error("Error fetching movies:", err);
     }
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory]);
 
   return (

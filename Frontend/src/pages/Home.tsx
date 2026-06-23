@@ -24,7 +24,9 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, sort]);
 
   const averageRating =

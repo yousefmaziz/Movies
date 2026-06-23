@@ -1,8 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+type Actor = {
+  _id: string;
+  name: string;
+  image: string;
+};
+
+type Movie = {
+  _id: string;
+  title: string;
+  posterUrl: string;
+  rating: number | string;
+  releaseYear?: string | number;
+  category?: string;
+  director?: string;
+  description?: string;
+  cast?: Actor[];
+};
+
 export default function MovieDetails() {
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const { id, idCast } = useParams();
   const navigate = useNavigate();
 
@@ -18,7 +36,9 @@ export default function MovieDetails() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (id) getMovieDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, idCast]);
 
   if (!movie) {
@@ -134,7 +154,7 @@ export default function MovieDetails() {
         </div>
 
         {/* ── CAST ── */}
-        {movie.cast?.length > 0 && (
+        {movie.cast && movie.cast.length > 0 && (
           <div className="mt-10">
             <div className="flex items-center gap-3 mb-5">
               <span className="h-3.5 w-1 rounded-full bg-red-500" />
@@ -144,13 +164,13 @@ export default function MovieDetails() {
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
-              {movie.cast.map((actor: { name: string; image: string }) => (
+              {movie.cast.map((actor: Actor) => (
                 <div
                   onClick={() => {
                     console.log(actor._id);
                     handleCastPage(actor._id);
                   }}
-                  key={actor.name}
+                  key={actor._id}
                   className="flex flex-col items-center gap-2 group cursor-pointer"
                 >
                   <div className=" w-14 h-14 rounded-full overflow-hidden border border-zinc-700/60 group-hover:border-zinc-500 transition-colors">

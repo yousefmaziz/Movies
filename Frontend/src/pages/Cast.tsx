@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function Cast() {
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState<{ name?: string; image?: string }>({});
   const { id, castId } = useParams();
 
   const getMovieDetails = async () => {
@@ -15,6 +15,7 @@ export default function Cast() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (id) getMovieDetails();
   }, [id, castId]);
   return (

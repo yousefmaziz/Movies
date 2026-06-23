@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 interface Movie {
+  director: import("react/jsx-runtime").JSX.Element;
   _id: string;
   title: string;
   description: string;
@@ -12,19 +13,15 @@ interface Movie {
   category: string;
 }
 
-interface MovieCardProps {
-  movie: Movie;
-}
-
-export default function Watchlist({ movie }: MovieCardProps) {
+export default function Watchlist() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMovies(watchlist);
   }, []);
-  const handleDetailsClick = () => navigate(`/movies/${movie._id}`);
 
   const removeFromWatchlist = (movieId: string) => {
     const updated = movies.filter((m) => m._id !== movieId);

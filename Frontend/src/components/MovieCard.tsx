@@ -25,9 +25,11 @@ export default function MovieCard({ movie }: MovieCardProps) {
     const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
     const exists = watchlist.some((item: Movie) => item._id === movie._id);
     setIsSaved(exists);
-  }, []);
+  }, [movie._id]);
 
-  const handleDetailsClick = () => navigate(`/movies/${movie._id}`);
+  function handleDetailsClick() {
+    return navigate(`/movies/${movie._id}`);
+  }
 
   return (
     <div className="group relative overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800/60 transition-all duration-200 hover:border-zinc-600/80 hover:shadow-lg hover:shadow-black/40">
