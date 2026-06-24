@@ -3,9 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 
 type Actor = {
+  castId: Key | null | undefined;
   _id: string;
   name: string;
   image: string;
+  BirthDay: number;
+  nationality: string;
+  description: string;
 };
 
 type Movie = {
@@ -17,6 +21,7 @@ type Movie = {
   category?: string;
   director?: string;
   description?: string;
+  trailer: string;
   cast?: Actor[];
 };
 
@@ -28,15 +33,23 @@ export default function MovieDetails() {
   const getMovieDetails = async () => {
     const response = await fetch(`${API_URL}/movies/${id}`);
     const data = await response.json();
-    console.log(data);
-
     setMovie(data);
-    console.log(data.cast);
   };
   const handleCastPage = (castId: string) => {
+    console.log("Navigating with Cast ID:", castId);
+
     navigate(`/movies/${id}/cast/${castId}`);
   };
 
+  const handleTrailer = () => {
+    console.log(movie);
+
+    if (movie?.trailer) {
+      window.open(movie.trailer, "_blank");
+    } else {
+      console.log("Trailer not found");
+    }
+  };
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (id) getMovieDetails();
@@ -45,7 +58,7 @@ export default function MovieDetails() {
 
   if (!movie) {
     return (
-      <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
+      <div className="bg-[#0c0c0e] flex items-center justify-center h-1000">
         <div className="flex flex-col items-center gap-3">
           <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
           <p className="text-zinc-500 text-sm">Loading…</p>
@@ -57,7 +70,7 @@ export default function MovieDetails() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="h-max bg-[#0c0c0e] text-white pt-16 pb-16"
+      className="bg-[#0c0c0e] text-white pt-16 pb-16 h-1000"
     >
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         {/* Back */}
@@ -89,7 +102,7 @@ export default function MovieDetails() {
               <img
                 src={movie.posterUrl}
                 alt={movie.title}
-                className="w-full min-h-screen object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
@@ -140,7 +153,10 @@ export default function MovieDetails() {
 
             {/* action */}
             <div>
-              <button className="flex items-center gap-2 rounded-lg bg-red-600 hover:bg-red-700 px-5 py-2.5 text-sm font-semibold transition-colors">
+              <button
+                onClick={handleTrailer}
+                className="cursor-pointer flex items-center gap-2 rounded-lg bg-red-600 hover:bg-red-700 px-5 py-2.5 text-sm font-semibold transition-colors"
+              >
                 <svg
                   width="13"
                   height="13"
@@ -166,23 +182,20 @@ export default function MovieDetails() {
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4">
-              {movie.cast.map((actor: Actor) => (
+              {movie.cast.map((actor) => (
                 <div
-                  onClick={() => {
-                    console.log("Actor:", actor);
-                    console.log("Actor _id:", actor._id);
-                    handleCastPage(actor._id);
-                  }}
                   key={actor._id}
+                  onClick={() => handleCastPage(actor._id)}
                   className="flex flex-col items-center gap-2 group cursor-pointer"
                 >
-                  <div className=" w-14 h-14 rounded-full overflow-hidden border border-zinc-700/60 group-hover:border-zinc-500 transition-colors">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border border-zinc-700/60 group-hover:border-zinc-500 transition-colors">
                     <img
                       src={actor.image}
                       alt={actor.name}
-                      className="w-full min-h-screen object-cover group-hover:scale-105 transition-transform duration-200"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
                     />
                   </div>
+
                   <p className="text-[11px] text-center text-zinc-500 group-hover:text-zinc-300 transition-colors leading-tight">
                     {actor.name}
                   </p>

@@ -5,11 +5,13 @@ const API_URL = import.meta.env.VITE_API_URL;
 type Movie = {
   _id: string;
   title: string;
-  description: string;
   posterUrl: string;
-  category: string;
-  rating: number;
-  releaseYear?: number;
+  rating: number | string;
+  releaseYear?: string | number;
+  category?: string;
+  director?: string;
+  description?: string;
+  trailer: string;
   [key: string]: any;
 };
 

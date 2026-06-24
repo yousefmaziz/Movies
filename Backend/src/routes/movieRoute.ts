@@ -7,6 +7,7 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     const movie = await movieModel.create(req.body);
+    console.log(req.body);
     return res.status(201).json(movie);
   } catch (err) {
     return res.status(400).json({
@@ -65,7 +66,7 @@ router.get("/:id/cast/:castId", async (req, res) => {
       });
     }
 
-    const actor = movie.cast?.find(
+    const actor = movie.cast.find(
       (item: any) => item._id.toString() === castId,
     );
 
@@ -76,33 +77,26 @@ router.get("/:id/cast/:castId", async (req, res) => {
     }
 
     return res.status(200).json(actor);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
     return res.status(500).json({
       message: "Internal Server Error",
     });
   }
 });
-
 // جلب جميع الممثلين لفيلم
 router.get("/:id/cast", async (req, res) => {
   try {
     const movie = await movieModel.findById(req.params.id);
 
     if (!movie) {
-      return res.status(404).json({
-        message: "Movie not found",
-      });
+      return res.status(404).json({ message: "Movie not found" });
     }
 
-    return res.status(200).json(movie.cast);
+    return res.status(200).json(movie.cast || []);
   } catch (err) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-    });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 // جلب فيلم بالـ id (آخر Route)
 router.get("/:id", async (req, res) => {
   try {

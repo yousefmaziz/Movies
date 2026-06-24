@@ -59,7 +59,7 @@ export default function Watchlist() {
   }
   if (!movies) {
     return (
-      <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
+      <div className="bg-[#0c0c0e] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
           <p className="text-zinc-500 text-sm">Loading…</p>
@@ -70,7 +70,7 @@ export default function Watchlist() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="min-h-screen bg-[#0c0c0e] text-white pt-18 pb-16"
+      className=" bg-[#0c0c0e] text-white pt-18 pb-16 h-1000"
     >
       <div className="max-w-4xl mx-auto px-5 lg:px-8">
         {/* Header */}

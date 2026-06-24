@@ -41,7 +41,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <img
           src={movie.posterUrl}
           alt={movie.title}
-          className="min-h-screen w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
         {/* overlay on hover */}
