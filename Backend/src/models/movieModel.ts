@@ -8,9 +8,16 @@ interface Movie {
   description: string;
   posterUrl: string;
   category: string;
-  cast?: [{
-    _id: any; name: string; image: string 
-}]; // Optional field for cast members
+  Tralier: string;
+  cast?: [
+    {
+      _id: string;
+      name: string;
+      image: string;
+      BirthDay: number;
+      nationality: string;
+    },
+  ]; // Optional field for cast members
 }
 
 const movieSchema = new mongoose.Schema<Movie>({
@@ -21,7 +28,12 @@ const movieSchema = new mongoose.Schema<Movie>({
   description: { type: String },
   posterUrl: { type: String },
   category: { type: String },
-  cast: { type: [{ name: String, image: String }] },
+  Tralier: { type: String },
+  cast: {
+    type: [
+      { name: String, image: String, BirthDay: Number, nationality: String },
+    ],
+  },
 });
 
 const movieModel = mongoose.model("movies", movieSchema);
