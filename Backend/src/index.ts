@@ -3,9 +3,10 @@ import cors from "cors";
 import mongoose from "mongoose";
 import movieRoutes from "./routes/movieRoute";
 import dotenv from "dotenv";
+
 dotenv.config();
+
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 mongoose
   .connect(process.env.MONGO_URI as string)
@@ -21,6 +22,13 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/movies", movieRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// شغل السيرفر محلياً فقط
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3001;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export default app;
