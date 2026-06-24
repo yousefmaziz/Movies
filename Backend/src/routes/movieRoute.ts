@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const { search, category, sortBy, order, limit } = req.query;
+
     const query: any = {};
     let sortOption: any = {};
 
@@ -30,9 +31,7 @@ router.get("/", async (req, res) => {
 
     if (search) {
       query.title = {
-        // علشان يجيب ااي فيلم يحتوي الكلمة اللي المستخدم كتبها في البحث
         $regex: search,
-        // علشان البحث مايكون حساس لحالة الحروف يعني يجيب "Inception" لو المستخدم كتب "inception" او "INCEPTION"
         $options: "i",
       };
     }
@@ -40,6 +39,7 @@ router.get("/", async (req, res) => {
     if (category) {
       query.category = category;
     }
+
     const limitValue = limit ? parseInt(limit as string) : 20;
 
     const movies = await movieModel
@@ -48,10 +48,13 @@ router.get("/", async (req, res) => {
       .limit(limitValue);
 
     res.status(200).json(movies);
-  } catch (err) {
-    res.status(400).json({
+  } catch (err: any) {
+    console.error("MOVIES ERROR:", err);
+
+    res.status(500).json({
       message: "Error fetching movies",
-      error: err,
+      error: err?.message || String(err),
+      stack: err?.stack,
     });
   }
 });
