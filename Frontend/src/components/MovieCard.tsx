@@ -2,8 +2,6 @@ import { BiHeart } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { addToWatchlist } from "../utils/watchlistUtils.ts";
-const API_URL = import.meta.env.VITE_API_URL;
-
 interface Movie {
   _id: string;
   title: string;
@@ -29,7 +27,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
   }, [movie._id]);
 
   function handleDetailsClick() {
-    return navigate(`${API_URL}/movies/${movie._id}`);
+    return navigate(`/movies/${movie._id}`);
   }
 
   return (
@@ -43,7 +41,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <img
           src={movie.posterUrl}
           alt={movie.title}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="min-h-screen w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
         {/* overlay on hover */}

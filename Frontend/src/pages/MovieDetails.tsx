@@ -45,7 +45,7 @@ export default function MovieDetails() {
 
   if (!movie) {
     return (
-      <div className="h-full bg-[#0c0c0e] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
           <p className="text-zinc-500 text-sm">Loading…</p>
@@ -57,7 +57,7 @@ export default function MovieDetails() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="min-h-screen bg-[#0c0c0e] text-white pt-16 pb-16"
+      className="h-max bg-[#0c0c0e] text-white pt-16 pb-16"
     >
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         {/* Back */}
@@ -89,7 +89,7 @@ export default function MovieDetails() {
               <img
                 src={movie.posterUrl}
                 alt={movie.title}
-                className="w-full h-full object-cover"
+                className="w-full min-h-screen object-cover"
               />
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function MovieDetails() {
                     <img
                       src={actor.image}
                       alt={actor.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                      className="w-full min-h-screen object-cover group-hover:scale-105 transition-transform duration-200"
                     />
                   </div>
                   <p className="text-[11px] text-center text-zinc-500 group-hover:text-zinc-300 transition-colors leading-tight">

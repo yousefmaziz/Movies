@@ -28,7 +28,7 @@ export default function Cast() {
     <>
       <div
         style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-        className="h-full bg-[#0c0c0e] text-white pt-16 pb-16"
+        className="min-h-screen bg-[#0c0c0e] text-white pt-16 pb-16"
       >
         <div className="max-w-5xl mx-auto px-5 lg:px-8">
           <div className="flex flex-col sm:flex-row gap-7 bg-zinc-900/50 border border-zinc-800/60 rounded-2xl overflow-hidden p-5 sm:p-6">
@@ -41,7 +41,7 @@ export default function Cast() {
                 <img
                   src={movie.image}
                   alt={movie.name}
-                  className="w-full h-full object-cover"
+                  className="w-full min-h-screen object-cover"
                 />
               </div>
             </div>

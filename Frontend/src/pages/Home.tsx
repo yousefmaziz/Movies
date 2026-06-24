@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="bg-[#0c0c0e] text-white h-full"
+      className="bg-[#0c0c0e] text-white min-h-screen"
     >
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-20 pb-14">
@@ -186,19 +186,11 @@ export default function Home() {
           </div>
 
           {movies.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-zinc-600">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.4"
-              >
-                <rect x="2" y="2" width="20" height="20" rx="3" />
-                <path d="M7 8h10M7 12h6" />
-              </svg>
-              <p className="mt-3 text-sm">No movies found</p>
+            <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
+              <div className="flex flex-col items-center gap-3">
+                <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
+                <p className="text-zinc-500 text-sm">Loading…</p>
+              </div>
             </div>
           )}
         </div>
