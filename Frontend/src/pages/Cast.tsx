@@ -6,10 +6,18 @@ export default function Cast() {
   const { id, castId } = useParams();
 
   const getMovieDetails = async () => {
-    const response = await fetch(`${API_URL}/movies/${id}/cast/${castId}`);
-    const cast = await response.json();
-    setMovie(cast);
-    console.log(cast);
+    console.log("Movie ID:", id);
+    console.log("Cast ID:", castId);
+
+    const url = `${API_URL}/movies/${id}/cast/${castId}`;
+    console.log("Fetching:", url);
+
+    const response = await fetch(url);
+
+    console.log("Status:", response.status);
+
+    const text = await response.text();
+    console.log("Response:", text);
   };
 
   useEffect(() => {
