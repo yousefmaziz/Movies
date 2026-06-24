@@ -45,7 +45,7 @@ export default function Categories() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="min-h-screen bg-[#0c0c0e] text-white pt-16 pb-16"
+      className="h-full bg-[#0c0c0e] text-white pt-16 pb-16"
     >
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         {/* Header */}

@@ -21,13 +21,7 @@ router.get("/", async (req, res) => {
     const { search, category, sortBy, order, limit } = req.query;
 
     const query: any = {};
-    let sortOption: any = {};
-
-    if (sortBy) {
-      sortOption = {
-        [sortBy as string]: order === "asc" ? 1 : -1,
-      };
-    }
+    const sortOption: any = {};
 
     if (search) {
       query.title = {
@@ -40,34 +34,48 @@ router.get("/", async (req, res) => {
       query.category = category;
     }
 
-    const limitValue = limit ? parseInt(limit as string) : 20;
+    if (sortBy) {
+      sortOption[sortBy as string] = order === "asc" ? 1 : -1;
+    }
+
+    const limitValue = Number(limit) || 20;
 
     const movies = await movieModel
       .find(query)
       .sort(sortOption)
       .limit(limitValue);
 
-    res.status(200).json(movies);
-  } catch (err: any) {
-    console.error("MOVIES ERROR:", err);
+    return res.status(200).json(movies);
+  } catch (error: any) {
+    console.error("GET /movies ERROR:", error);
 
-    res.status(500).json({
-      message: "Error fetching movies",
-      error: err?.message || String(err),
-      stack: err?.stack,
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 });
 
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
-    const SelectedMovie = await movieModel.findById(id);
-    res.status(200).json(SelectedMovie);
-  } catch (err) {
-    res.status(400).json({
-      message: "Error fetching movie",
-      error: err,
+    const { id } = req.params;
+
+    const movie = await movieModel.findById(id);
+
+    if (!movie) {
+      return res.status(404).json({
+        success: false,
+        message: "Movie not found",
+      });
+    }
+
+    return res.status(200).json(movie);
+  } catch (error: any) {
+    console.error("GET /movies/:id ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 });
@@ -95,13 +103,13 @@ router.get("/:id/cast/:castId", async (req, res) => {
 
     const movie = await movieModel.findById(id);
 
-    if (!movie) {
-      return res.status(404).json({
-        message: "Movie not found",
-      });
-    }
+    console.log("Requested Cast ID:", castId);
 
-    const cast = movie.cast?.find((actor) => actor._id.toString() === castId);
+    movie?.cast?.forEach((actor) => {
+      console.log("Actor ID:", actor._id.toString());
+    });
+
+    const cast = movie?.cast?.find((actor) => actor._id.toString() === castId);
 
     if (!cast) {
       return res.status(404).json({
@@ -109,12 +117,9 @@ router.get("/:id/cast/:castId", async (req, res) => {
       });
     }
 
-    res.status(200).json(cast);
+    res.json(cast);
   } catch (err) {
-    res.status(400).json({
-      message: "Error fetching cast",
-      error: err,
-    });
+    console.log(err);
   }
 });
 export default router;

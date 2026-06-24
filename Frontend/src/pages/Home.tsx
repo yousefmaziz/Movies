@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="bg-[#0c0c0e] text-white min-h-screen"
+      className="bg-[#0c0c0e] text-white h-full"
     >
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-20 pb-14">

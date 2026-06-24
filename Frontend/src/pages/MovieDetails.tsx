@@ -22,12 +22,13 @@ type Movie = {
 
 export default function MovieDetails() {
   const [movie, setMovie] = useState<Movie | null>(null);
-  const { id, idCast } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const getMovieDetails = async () => {
     const response = await fetch(`${API_URL}/movies/${id}`);
     const data = await response.json();
+    console.log(data);
 
     setMovie(data);
     console.log(data.cast);
@@ -40,11 +41,11 @@ export default function MovieDetails() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (id) getMovieDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, idCast]);
+  }, [id]);
 
   if (!movie) {
     return (
-      <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
+      <div className="h-full bg-[#0c0c0e] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
           <p className="text-zinc-500 text-sm">Loading…</p>
@@ -168,7 +169,8 @@ export default function MovieDetails() {
               {movie.cast.map((actor: Actor) => (
                 <div
                   onClick={() => {
-                    console.log(actor._id);
+                    console.log("Actor:", actor);
+                    console.log("Actor _id:", actor._id);
                     handleCastPage(actor._id);
                   }}
                   key={actor._id}

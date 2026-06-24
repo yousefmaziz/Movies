@@ -2,6 +2,7 @@ import { BiHeart } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { addToWatchlist } from "../utils/watchlistUtils.ts";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Movie {
   _id: string;
@@ -28,7 +29,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
   }, [movie._id]);
 
   function handleDetailsClick() {
-    return navigate(`/movies/${movie._id}`);
+    return navigate(`${API_URL}/movies/${movie._id}`);
   }
 
   return (
@@ -96,7 +97,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
         <button
           onClick={handleDetailsClick}
-          className="mt-3 w-full rounded-lg bg-zinc-800 hover:bg-zinc-700 py-1.5 text-xs font-medium text-zinc-200 transition-colors"
+          className="mt-3 w-full rounded-lg bg-zinc-800 hover:bg-zinc-700 py-1.5 text-xs font-medium text-zinc-200 transition-colors cursor-pointer"
         >
           View Details
         </button>
