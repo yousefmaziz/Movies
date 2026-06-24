@@ -7,11 +7,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-
+console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
+console.log("NODE_ENV:", process.env.NODE_ENV);
 mongoose
   .connect(process.env.MONGO_URI as string)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err: Error) => console.error("MongoDB connection error:", err));
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.error("FULL MONGODB ERROR:");
+    console.error(err);
+  });
 
 app.use(cors());
 app.use(express.json());
