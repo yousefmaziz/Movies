@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Movie = {
   _id: string;
@@ -19,7 +20,7 @@ export default function Home() {
 
   const getMovies = async () => {
     try {
-      let url = "http://localhost:3001/movies?limit=10";
+      let url = `${API_URL}/movies?limit=10`;
       if (sort === "Highest") url += "&sortBy=rating&order=desc";
       else if (sort === "Lowest") url += "&sortBy=rating&order=asc";
       else if (sort === "Newest") url += "&sortBy=releaseYear&order=desc";

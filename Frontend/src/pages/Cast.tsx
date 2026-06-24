@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Cast() {
   const [movie, setMovie] = useState<{ name?: string; image?: string }>({});
   const { id, castId } = useParams();
 
   const getMovieDetails = async () => {
-    const response = await fetch(
-      `http://localhost:3001/movies/${id}/cast/${castId}`,
-    );
+    const response = await fetch(`${API_URL}/movies/${id}/cast/${castId}`);
     const cast = await response.json();
     setMovie(cast);
     console.log(cast);

@@ -1,10 +1,10 @@
 import "swiper/css";
 import "swiper/css/navigation";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const categories = [
   "All",
@@ -20,12 +20,13 @@ const categories = [
 ];
 
 export default function Categories() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [movies, setMovies] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState("All");
 
   const getMovies = async () => {
     try {
-      let url = "http://localhost:3001/movies";
+      let url = `${API_URL}/movies`;
       if (activeCategory !== "All") url += `?category=${activeCategory}`;
       const response = await fetch(url);
       const data = await response.json();

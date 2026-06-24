@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Actor = {
   _id: string;
@@ -25,7 +26,7 @@ export default function MovieDetails() {
   const navigate = useNavigate();
 
   const getMovieDetails = async () => {
-    const response = await fetch(`http://localhost:3001/movies/${id}`);
+    const response = await fetch(`${API_URL}/movies/${id}`);
     const data = await response.json();
 
     setMovie(data);
