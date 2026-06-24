@@ -6,11 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 mongoose
-  .connect("mongodb://localhost:27017/Movies")
+  .connect(process.env.MONGO_URI as string)
   .then(() => console.log("MongoDB connected"))
   .catch((err: Error) => console.error("MongoDB connection error:", err));
-mongoose.connect(process.env.MONGO_URI as string);
 
 app.use(cors());
 app.use(express.json());
