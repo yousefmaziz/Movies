@@ -21,23 +21,69 @@ interface Movie {
 }
 
 const castSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  BirthDay: Number,
-  nationality: String,
-  description: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  BirthDay: {
+    type: Number,
+    required: true,
+  },
+  nationality: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
 });
 
 const movieSchema = new mongoose.Schema<Movie>({
-  title: String,
-  director: String,
-  releaseYear: Number,
-  rating: Number,
-  description: String,
-  posterUrl: String,
-  category: String,
-  trailer: String,
-  cast: [castSchema],
+  title: {
+    type: String,
+    required: true,
+  },
+  director: {
+    type: String,
+    required: true,
+  },
+  releaseYear: {
+    type: Number,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  posterUrl: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  trailer: {
+    type: String,
+    required: true,
+  },
+  cast: {
+    type: [castSchema],
+    required: true,
+    validate: {
+      validator: (arr: CastMember[]) => arr.length > 0,
+      message: "At least one cast member is required",
+    },
+  },
 });
 
 const movieModel = mongoose.model("movies", movieSchema);

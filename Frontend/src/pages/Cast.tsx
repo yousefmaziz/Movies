@@ -12,7 +12,7 @@ export default function Cast() {
       const url = `${API_URL}/movies/${id}/cast/${castId}`;
 
       const response = await fetch(url);
-
+      
       const data = await response.json(); // ✅ هنا الحل
 
       console.log("Data:", data);

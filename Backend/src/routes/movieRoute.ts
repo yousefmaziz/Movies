@@ -6,13 +6,19 @@ const router = Router();
 // إنشاء فيلم
 router.post("/", async (req, res) => {
   try {
-    const movie = await movieModel.create(req.body);
     console.log(req.body);
+
+    const movie = await movieModel.create(req.body);
+
     return res.status(201).json(movie);
-  } catch (err) {
+  } catch (err: any) {
+    console.error("CREATE ERROR:", err);
+
     return res.status(400).json({
       message: "Error creating movie",
-      error: err,
+      error: err.message,
+      name: err.name,
+      errors: err.errors,
     });
   }
 });

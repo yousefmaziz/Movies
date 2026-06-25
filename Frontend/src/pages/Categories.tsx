@@ -42,6 +42,9 @@ export default function Categories() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory]);
 
+  if (!movies) return;
+  <div>no films</div>;
+
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}

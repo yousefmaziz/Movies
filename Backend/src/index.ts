@@ -10,12 +10,11 @@ const app = express();
 console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 mongoose
-  .connect(process.env.MONGO_URI || process.env.MONGODB_URI || "")
+  .connect(process.env.MONGO_URI!)
   .then(() => {
     console.log("MongoDB connected successfully");
   })
   .catch((err) => {
-    console.error("FULL MONGODB ERROR:");
     console.error(err);
   });
 
