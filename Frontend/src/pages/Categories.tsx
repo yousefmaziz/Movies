@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const categories = [
@@ -20,35 +21,40 @@ const categories = [
 ];
 
 export default function Categories() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [movies, setMovies] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
 
   const getMovies = async () => {
     try {
+      setLoading(true);
+
       let url = `${API_URL}/movies`;
-      if (activeCategory !== "All") url += `?category=${activeCategory}`;
+
+      if (activeCategory !== "All") {
+        url += `?category=${activeCategory}`;
+      }
+
       const response = await fetch(url);
       const data = await response.json();
-      setMovies(data as any[]);
+
+      setMovies(data);
     } catch (err) {
       console.error("Error fetching movies:", err);
+      setMovies([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     getMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory]);
-
-  if (!movies) return;
-  <div>no films</div>;
 
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="bg-[#0c0c0e] text-white pt-16 pb-16 h-1000"
+      className="bg-[#0c0c0e] text-white pt-16 pb-16 min-h-screen"
     >
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         {/* Header */}
@@ -57,12 +63,15 @@ export default function Categories() {
           <h1 className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400">
             Browse Categories
           </h1>
-          <span className="text-xs text-zinc-600 font-mono ml-auto">
-            {movies.length} titles
-          </span>
+
+          {!loading && (
+            <span className="text-xs text-zinc-600 font-mono ml-auto">
+              {movies.length} titles
+            </span>
+          )}
         </div>
 
-        {/* Category Swiper */}
+        {/* Categories */}
         <div className="mb-7 relative">
           <Swiper
             modules={[Navigation]}
@@ -88,22 +97,27 @@ export default function Categories() {
           </Swiper>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-zinc-800/60 mb-7" />
 
-        {/* Grid */}
-        {movies.length > 0 ? (
+        {/* Loading */}
+        {loading ? (
+          <div className="min-h-[400px] flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
+              <p className="text-zinc-500 text-sm">Loading...</p>
+            </div>
+          </div>
+        ) : movies.length === 0 ? (
+          /* No Movies */
+          <div className="min-h-[400px] flex items-center justify-center">
+            <p className="text-zinc-500 text-lg">No Movies Found 🎬</p>
+          </div>
+        ) : (
+          /* Movies Grid */
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {movies.map((movie) => (
               <MovieCard key={movie._id} movie={movie} />
             ))}
-          </div>
-        ) : (
-          <div className="min-h-screen bg-[#0c0c0e] flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3">
-              <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
-              <p className="text-zinc-500 text-sm">Loading…</p>
-            </div>
           </div>
         )}
       </div>

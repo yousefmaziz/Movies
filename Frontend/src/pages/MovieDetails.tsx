@@ -58,7 +58,7 @@ export default function MovieDetails() {
 
   if (!movie) {
     return (
-      <div className="bg-[#0c0c0e] flex items-center justify-center h-1000">
+      <div className="bg-[#0c0c0e] flex items-center justify-center h-200">
         <div className="flex flex-col items-center gap-3">
           <div className="h-6 w-6 rounded-full border-2 border-zinc-700 border-t-red-500 animate-spin" />
           <p className="text-zinc-500 text-sm">Loading…</p>
@@ -70,7 +70,7 @@ export default function MovieDetails() {
   return (
     <div
       style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
-      className="bg-[#0c0c0e] text-white pt-16 pb-16 h-1000"
+      className="bg-[#0c0c0e] text-white pt-16 pb-16 h-200"
     >
       <div className="max-w-5xl mx-auto px-5 lg:px-8">
         {/* Back */}
