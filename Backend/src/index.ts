@@ -7,16 +7,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
 console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
 console.log("NODE_ENV:", process.env.NODE_ENV);
-mongoose
-  .connect(process.env.MONGO_URI!)
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
 
 app.use(cors());
 app.use(express.json());
@@ -27,13 +20,22 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/movies", movieRoutes);
 
-// شغل السيرفر محلياً فقط
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+async function start() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI!);
+
+    console.log("MongoDB connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on ${PORT}`);
+    });
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+  }
 }
+
+start();
 
 export default app;
